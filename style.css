@@ -1,0 +1,60 @@
+*{
+    box-sizing: border-box;
+}
+
+section{
+    background-color:bisque;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: aquamarine;
+    height: max-content;
+}
+
+.user-grid,.computer-grid,.user-ships,.computer-ships{
+    background-color: plum;
+    height: 300px;
+    width: 300px;
+}
+
+.square{
+    height: 10%;
+    width: 10%;
+    background-color: purple;
+    border: 1px solid silver; 
+    float: left;
+}
+/* .square:hover{
+    background-color: gray;
+} */
+
+.ship{
+    display: flex;
+    /* margin: 30px 0 0 30px; */
+    height: 30px;
+    width: max-content;
+    background-color: gold;
+    position: relative;
+}
+
+.ship-active{
+    opacity: 0.5;
+}
+
+.ss{
+    height: 100%;
+    width: 30px;
+}
+
+.taken{
+    background-color: palegreen;
+}
+
+.takenByShip{
+    background-color: darkorange;
+}
