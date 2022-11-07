@@ -1,23 +1,30 @@
-console.log("main.js is working!)");
+console.log("main.js is connected!)");
 const userGrid = document.querySelector('.user-grid')
 const computerGrid = document.querySelector('.computer-grid')
+const userShipsArea = document.querySelector('.user-ships')
+const computerShipsArea = document.querySelector('.computer-ships')
 const ships = document.querySelectorAll('.ship')
 const AllSquares = document.querySelectorAll('.square')
 const userSquares = []
 const computerSquares = []
 const width = 10
+const countShips = 10
 var gameStart = false;
 
-const startGam = document.querySelector("#startGame");
-startGam.addEventListener("click", startGame);
+const startG = document.querySelector("#startGame");
+startG.addEventListener("click", startGame);
 
 const randForMe = document.querySelector("#randForMe");
-randForMe.addEventListener("click", createShips);
+randForMe.addEventListener("click", () => createShips(userSquares));
 
-// const randForComp = document.querySelector("#randForComp");
-// randForComp.addEventListener("click", cleanBoard(computerSquares));
+const randForEnemy = document.querySelector("#randForEnemy");
+randForEnemy.addEventListener("click", () => createShips(computerSquares));
 
+const CleanMe = document.querySelector("#CleanMe");
+CleanMe.addEventListener("click", () => cleanBoard(userSquares));
 
+const CleanEnemy = document.querySelector("#CleanEnemy");
+CleanEnemy.addEventListener("click", () => cleanBoard(computerSquares));
 
 //Create Board
 function createBoard(grid, squares) {
@@ -227,20 +234,20 @@ function generate(GridSquares, shipId) {
 
 }
 
-console.log("ship1")
-generate(computerSquares,"enemyShip1");
+//console.log("ship1")
+// generate(computerSquares,"enemyShip1");
 
-generate(computerSquares,"enemyShip2");
-generate(computerSquares,"enemyShip3");
+// generate(computerSquares,"enemyShip2");
+// generate(computerSquares,"enemyShip3");
 
-generate(computerSquares,"enemyShip4");
-generate(computerSquares,"enemyShip5");
-generate(computerSquares,"enemyShip6");
+// generate(computerSquares,"enemyShip4");
+// generate(computerSquares,"enemyShip5");
+// generate(computerSquares,"enemyShip6");
 
-generate(computerSquares,"enemyShip7");
-generate(computerSquares,"enemyShip8");
-generate(computerSquares,"enemyShip9");
-generate(computerSquares,"enemyShip10");
+// generate(computerSquares,"enemyShip7");
+// generate(computerSquares,"enemyShip8");
+// generate(computerSquares,"enemyShip9");
+// generate(computerSquares,"enemyShip10");
 
 
 // for(let i = randomStart; i < (randomStart + shipById.childElementCount) ; i++){
@@ -248,28 +255,64 @@ generate(computerSquares,"enemyShip10");
       // }
 
 
-function createShips(){
-  cleanBoard(userSquares);
+function createShips(squares){
+  console.log("squares",squares);
+  cleanBoard(squares);
 
-  generate(userSquares,"ship1");
+  if(squares === computerSquares){
+    console.log("ENEMY");
+    generate(squares,"enemyShip1");
 
-  generate(userSquares,"ship2");
-  generate(userSquares,"ship3");
+    generate(squares,"enemyShip2");
+    generate(squares,"enemyShip3");
 
-  generate(userSquares,"ship4");
-  generate(userSquares,"ship5");
-  generate(userSquares,"ship6");
+    generate(squares,"enemyShip4");
+    generate(squares,"enemyShip5");
+    generate(squares,"enemyShip6");
 
-  generate(userSquares,"ship7");
-  generate(userSquares,"ship8");
-  generate(userSquares,"ship9");
-  generate(userSquares,"ship10");
+    generate(squares,"enemyShip7");
+    generate(squares,"enemyShip8");
+    generate(squares,"enemyShip9");
+    generate(squares,"enemyShip10");
+  }
+  else if(squares === userSquares){
+    generate(squares,"ship1");
+
+    generate(squares,"ship2");
+    generate(squares,"ship3");
+  
+    generate(squares,"ship4");
+    generate(squares,"ship5");
+    generate(squares,"ship6");
+  
+    generate(squares,"ship7");
+    generate(squares,"ship8");
+    generate(squares,"ship9");
+    generate(squares,"ship10");
+  }
 }
 
-function cleanBoard(sq){
-  for(let i = 0; i < width*width; i++){
-    sq[i].classList.remove('taken')
-    sq[i].classList.remove('takenByShip')
+function cleanBoard(squares){
+  let shipsArea
+  let shipNameStart
+  squares.forEach( square =>{
+    square.classList.remove('taken')
+    square.classList.remove('takenByShip')
+  })
+
+  if(squares === userSquares){
+    shipsArea = userShipsArea
+    shipNameStart = 's'
+  }
+  else if(squares === computerSquares){
+    shipsArea = computerShipsArea
+    shipNameStart = 'enemyS'
+  }
+
+  for(let i = 1; i <= countShips; i++){
+    //console.log(`[id="${shipNameStart}hip${i}"]`)
+    shipById = document.querySelector(`[id="${shipNameStart}hip${i}"]`)
+    shipsArea.append(shipById)
   }
 } 
 
