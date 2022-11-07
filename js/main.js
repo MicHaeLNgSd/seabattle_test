@@ -45,8 +45,8 @@ if(!gameStart){
   });
   
   userSquares.forEach(square =>{
-    square.addEventListener('dragenter', dragEnter),
-    square.addEventListener('dragleave', dragLeave),
+    //square.addEventListener('dragenter', dragEnter),
+    //square.addEventListener('dragleave', dragLeave),
     square.addEventListener('dragover', dragOver),
     square.addEventListener('drop', dragDrop)
   });
@@ -278,6 +278,8 @@ function startGame(){
   console.log("gameStart",gameStart)
   ships.forEach(ship =>{
       ship.setAttribute('draggable', false);
+      ship.addEventListener('dragstart', ()=>false);
+      ship.classList.add('unselectable');
     }
   )
   ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
