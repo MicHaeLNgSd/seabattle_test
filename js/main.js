@@ -1,10 +1,23 @@
-console.log("Hello");
+console.log("main.js is working!)");
 const userGrid = document.querySelector('.user-grid')
 const computerGrid = document.querySelector('.computer-grid')
 const ships = document.querySelectorAll('.ship')
+const AllSquares = document.querySelectorAll('.square')
 const userSquares = []
 const computerSquares = []
 const width = 10
+var gameStart = false;
+
+const startGam = document.querySelector("#startGame");
+startGam.addEventListener("click", startGame);
+
+const randForMe = document.querySelector("#randForMe");
+randForMe.addEventListener("click", createShips);
+
+// const randForComp = document.querySelector("#randForComp");
+// randForComp.addEventListener("click", cleanBoard(computerSquares));
+
+
 
 //Create Board
 function createBoard(grid, squares) {
@@ -24,18 +37,27 @@ createBoard(userGrid, userSquares)
 createBoard(computerGrid, computerSquares)
 
 //move around user ship
-ships.forEach(ship =>{
-  ship.addEventListener('dragstart', dragStart),
-  ship.addEventListener('dragend', dragEnd)
-  ship.addEventListener('drag', drag)
-});
+if(!gameStart){
+  ships.forEach(ship =>{
+    ship.addEventListener('dragstart', dragStart),
+    ship.addEventListener('dragend', dragEnd)
+    ship.addEventListener('drag', drag)
+  });
+  
+  userSquares.forEach(square =>{
+    square.addEventListener('dragenter', dragEnter),
+    square.addEventListener('dragleave', dragLeave),
+    square.addEventListener('dragover', dragOver),
+    square.addEventListener('drop', dragDrop)
+  });
 
-userSquares.forEach(square =>{
-  square.addEventListener('dragenter', dragEnter),
-  square.addEventListener('dragleave', dragLeave),
-  square.addEventListener('dragover', dragOver),
-  square.addEventListener('drop', dragDrop)
-});
+  ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
+    //const takingSection = e.target.id
+    takingSectionId = parseInt(e.target.id.substr(-1))
+    console.log("takingSection",takingSectionId)
+  }))
+}
+
 
 let draggedShip
 let draggedShipLength
@@ -47,11 +69,7 @@ let takingSectionId
 // }))
 
 
-ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
-  //const takingSection = e.target.id
-  takingSectionId = parseInt(e.target.id.substr(-1))
-  console.log("takingSection",takingSectionId)
-}))
+
 
 function drag(){
   //console.log('drag')
@@ -135,15 +153,11 @@ function dragEnd() {
   userSquares.forEach(sq=> sq.classList.remove('taken'))
 }
 
-ArrShips = {
-
-}
-
 //enemy board
 function generate(GridSquares, shipId) {
   //let randomDirection = Math.round(Math.random())
   let shipById = document.querySelector(`[id="${shipId}"]`)
-  console.log("shipById", shipId, shipById)
+  //console.log("shipById", shipId, shipById)
   
   // let shipByIdChildCount  = shipById.childElementCount
   //console.log("shipByIdChildCount", shipByIdChildCount)
@@ -159,8 +173,8 @@ function generate(GridSquares, shipId) {
     let randomStart = Math.abs(Math.floor(Math.random() * GridSquares.length));
     //var randomStart = 4;
 
-    console.log("try", j);
-    console.log("randomStart",randomStart,GridSquares.length)
+    //console.log("try", j);
+    //console.log("randomStart",randomStart,GridSquares.length)
 
     let shipStartY = Math.floor(randomStart/10) 
     let shipEndY = Math.floor((randomStart + shipById.childElementCount - 1)/10)
@@ -171,12 +185,12 @@ function generate(GridSquares, shipId) {
       }
     }
 
-    console.log("shipStartY",shipStartY)
+    //console.log("shipStartY",shipStartY)
     if (shipStartY === shipEndY && !isTaken){
 
       for(let i = -1; i <= 1; i++){
         
-        console.log("ArroundY", Math.floor((randomStart + i*10) / 10));
+        //console.log("ArroundY", Math.floor((randomStart + i*10) / 10));
 
         if( (randomStart + i*10) < 0 || (randomStart + i*10) > 99){ 
           continue;
@@ -185,7 +199,7 @@ function generate(GridSquares, shipId) {
         for(let j = randomStart + i*10 - 1; j < (randomStart + i*10 + shipById.childElementCount + 1); j++){
 
           if(j < (shipStartY + i)*10 || j > (shipStartY + i) * 10 + 9){ 
-            console.log("i,j", i,j )
+            //console.log("i,j", i,j )
             continue;
           }
           GridSquares[j].classList.add('taken');
@@ -232,3 +246,56 @@ generate(computerSquares,"enemyShip10");
 // for(let i = randomStart; i < (randomStart + shipById.childElementCount) ; i++){
       //   GridSquares[i].classList.add('taken');
       // }
+
+
+function createShips(){
+  cleanBoard(userSquares);
+
+  generate(userSquares,"ship1");
+
+  generate(userSquares,"ship2");
+  generate(userSquares,"ship3");
+
+  generate(userSquares,"ship4");
+  generate(userSquares,"ship5");
+  generate(userSquares,"ship6");
+
+  generate(userSquares,"ship7");
+  generate(userSquares,"ship8");
+  generate(userSquares,"ship9");
+  generate(userSquares,"ship10");
+}
+
+function cleanBoard(sq){
+  for(let i = 0; i < width*width; i++){
+    sq[i].classList.remove('taken')
+    sq[i].classList.remove('takenByShip')
+  }
+} 
+
+function startGame(){
+  gameStart = true
+  console.log("gameStart",gameStart)
+  ships.forEach(ship =>{
+      ship.setAttribute('draggable', false);
+    }
+  )
+  ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
+    let takingSectionDead = e.target.id
+    console.log("takingSectionDead",takingSectionDead)
+    let shipsdead = document.querySelector(`[id="${takingSectionDead}"]`)
+    console.log("shipsdead",shipsdead)
+    shipsdead.classList.add('dead')
+    //takingSectionId = parseInt(e.target.id.substr(-1)) 
+  }))
+
+  AllSquares.forEach(sq => sq.addEventListener('mousedown', (e) => {
+    console.log("sqDead")
+    //let sqDead = e.target.dataset.x
+    //console.log("sqDead",sqDead)
+    // let shipsdead = document.querySelector(`[id="${takingSectionDead}"]`)
+    // console.log("shipsdead",shipsdead)
+    // shipsdead.classList.add('dead')
+    //takingSectionId = parseInt(e.target.id.substr(-1)) 
+  }))
+}      

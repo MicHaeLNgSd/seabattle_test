@@ -38,7 +38,6 @@ section{
     /* margin: 30px 0 0 30px; */
     height: 30px;
     width: max-content;
-    background-color: gold;
     position: relative;
 }
 
@@ -46,9 +45,14 @@ section{
     opacity: 0.5;
 }
 
-.ss{
+.ss,.ess{
     height: 100%;
     width: 30px;
+    background-color: gold;
+}
+
+.dead{
+    background-color: red;
 }
 
 .taken{
@@ -57,4 +61,8 @@ section{
 
 .takenByShip{
     background-color: darkorange;
+}
+
+button:hover { 
+    background: #ff6600;
 }
