@@ -25,8 +25,8 @@ section{
 .square{
     height: 10%;
     width: 10%;
-    background-color: purple;
-    border: 1px solid silver; 
+    background-color: skyblue;
+    border: 1px solid lightcyan; 
     float: left;
 }
 /* .square:hover{
@@ -39,6 +39,8 @@ section{
     height: 30px;
     width: max-content;
     position: relative;
+    border: 2px solid black;
+    margin: -1px;
 }
 
 .ship-active{
@@ -48,7 +50,8 @@ section{
 .ss,.ess{
     height: 100%;
     width: 30px;
-    background-color: gold;
+    background-color: silver;
+    border: 1px solid lightslategray;
 }
 
 .dead{
@@ -64,7 +67,7 @@ section{
 }
 
 button:hover { 
-    background: #ff6600;
+    background: skyblue;
 }
 
 .unselectable {
@@ -74,4 +77,11 @@ button:hover {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+  }
+
+  .boom{
+    background-color: palevioletred;
+  }
+  .miss{
+    background-color: cornflowerblue;
   }
